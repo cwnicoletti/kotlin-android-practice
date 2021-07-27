@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 
 private const val TAG = "MainActivity"
 
@@ -63,6 +64,52 @@ class MainActivity : AppCompatActivity() {
         button8.setOnClickListener(listener)
         button9.setOnClickListener(listener)
         buttonDot.setOnClickListener(listener)
+
+        val opListener = View.OnClickListener { v ->
+            val op = (v as Button).text.toString()
+            val value = newNumber.text.toString()
+            if (value.isNotEmpty()) {
+                performOperation(value, op)
+            }
+
+            pendingOperation = op
+            displayOperation.text = pendingOperation
+        }
+
+        buttonEquals.setOnClickListener(opListener)
+        buttonDivide.setOnClickListener(opListener)
+        buttonMultiply.setOnClickListener(opListener)
+        buttonMinus.setOnClickListener(opListener)
+        buttonPlus.setOnClickListener(opListener)
+
+
+    }
+
+    private fun performOperation(value: String, operation: String) {
+        if (operation == null) {
+            operand1 = value.toDouble()
+        } else {
+            operand2 = value.toDouble()
+
+            if (pendingOperation == "") {
+                pendingOperation = operation
+            }
+
+            when (pendingOperation) {
+                "=" -> operand1 = operand2
+                "/" -> if (operand2 == 0.0) {
+                            operand1 = Double.NaN
+                        } else {
+                            operand1 = operand1!! / operand2
+                        }
+                "*" -> operand1 = operand1!! * operand2
+                "-" -> operand1 = operand1!! - operand2
+                "+" -> operand1 = operand1!! + operand2
+            }
+
+        }
+        result.setText(operand1.toString())
+        newNumber.setText("")
     }
 
     override fun onStart() {
