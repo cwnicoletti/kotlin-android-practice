@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Button-Counter"
+rootProject.name = "Calculator-App"

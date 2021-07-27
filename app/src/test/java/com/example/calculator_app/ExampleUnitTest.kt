@@ -1,4 +1,4 @@
-package com.example.button_counter
+package com.example.calculator_app
 
 import org.junit.Test
 
